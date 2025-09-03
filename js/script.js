@@ -2,32 +2,61 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =================================================================
-    // KODE UNTUK INTERAKTIVITAS MENU MODAL
+    // KODE BARU UNTUK SCROLLSPY (NAVIGASI AKTIF OTOMATIS)
     // =================================================================
-// =================================================================
-    // KODE BARU UNTUK TOMBOL "LIHAT SELENGKAPNYA"
-    // =================================================================
-    
-    const readMoreBtn = document.getElementById('read-more-btn');
-    const dots = document.getElementById('dots');
-    const moreText = document.getElementById('more-text');
+    const sections = document.querySelectorAll('section, header');
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
 
-    // Pastikan elemen-elemennya ada sebelum menambahkan event listener
-    if (readMoreBtn && dots && moreText) {
-        readMoreBtn.addEventListener('click', () => {
-            // Jika teks sedang tersembunyi
-            if (dots.style.display === "none") {
-                dots.style.display = "inline";
-                readMoreBtn.innerHTML = "Lihat Selengkapnya";
-                moreText.style.display = "none";
-            } else { // Jika teks sedang ditampilkan
-                dots.style.display = "none";
-                readMoreBtn.innerHTML = "Lihat Lebih Sedikit";
-                moreText.style.display = "inline";
+    const activateNavOnScroll = () => {
+        let current = 'hero'; // Default ke hero/beranda
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            // Aktifkan link sedikit lebih awal (offset 150px)
+            if (window.pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute('id');
             }
         });
-    }
 
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    };
+    
+    // Panggil fungsi saat scroll
+    window.addEventListener('scroll', activateNavOnScroll);
+
+
+  // =================================================================
+// KODE BARU UNTUK TOMBOL "LIHAT SELENGKAPNYA"
+// =================================================================
+    
+const readMoreBtn = document.getElementById('read-more-btn');
+const dots = document.getElementById('dots');
+const moreText = document.getElementById('more-text');
+
+// Pastikan elemen-elemennya ada sebelum menambahkan event listener
+if (readMoreBtn && dots && moreText) {
+    readMoreBtn.addEventListener('click', () => {
+        // Jika teks sedang tersembunyi
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            readMoreBtn.innerHTML = "Lihat Selengkapnya";
+            moreText.style.display = "none";
+        } else { // Jika teks sedang ditampilkan
+            dots.style.display = "none";
+            readMoreBtn.innerHTML = "Lihat Lebih Sedikit";
+            moreText.style.display = "inline";
+        }
+    });
+}
+
+    // =================================================================
+    // KODE UNTUK INTERAKTIVITAS MENU MODAL
+    // =================================================================
     const menuData = {
         "Coffee Series": [
             { name: "Hot Latte", description: "Satu shot espresso dengan susu steam dan berlapis foam tipis di atasnya tanpa gula.", price: "Rp20.000", image: "images/hotlatte.png" },
@@ -41,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Milk Series": [
             { name: "Belgian Chocolate", description: "Cokelat belgia premium yang disajikan panas atau dingin dengan susu segar.", price: "Rp24.000", image: "images/menu3.png" }
         ],
-        // Anda bisa menambahkan kategori lain dari HTML Anda di sini
         "Kopi Baper Series": [
             { name: "Kopi Kenangan Mantan", description: "Kopi hitam pahit yang mengingatkan pada kenangan.", price: "Rp21.000", image: "images/menu4.png"}
         ],
@@ -61,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
 
     const modal = document.querySelector('#menuModal');
-    // Pastikan modal ada sebelum menjalankan kode di dalamnya
     if (modal) {
         const categoryLinks = modal.querySelectorAll('.menu-sidebar nav li');
         const productImage = modal.querySelector('.product-image img');
@@ -119,10 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 categoryLinks.forEach(item => item.classList.remove('active'));
                 link.classList.add('active');
                 
-                // Ambil nama kategori dari teks di dalam span
                 const categoryName = link.querySelector('span') ? link.querySelector('span').textContent.trim() : '';
 
-                // Cek apakah kategori ada di data sebelum diupdate
                 if (menuData[categoryName]) {
                     currentCategory = categoryName;
                     currentIndex = 0;
@@ -150,10 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Inisialisasi tampilan modal saat pertama kali dimuat
         updateProductDisplay();
     }
-
 
     // =================================================================
     // KODE YANG SUDAH ADA SEBELUMNYA
@@ -162,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth Scrolling untuk anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            // Cek jika link bukan untuk toggle (seperti modal)
             if (!this.dataset.bsToggle) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
@@ -190,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, {
-        threshold: 0.1 // Atur kapan animasi terpicu
+        threshold: 0.1
     });
 
     const elementsToAnimate = document.querySelectorAll('section');

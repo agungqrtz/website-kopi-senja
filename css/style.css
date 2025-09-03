@@ -41,12 +41,18 @@ body {
 }
 
 .nav-link {
+    color: #EADBC8; /* Warna tulisan default (krem hangat) */
     font-weight: 600;
     transition: color 0.3s ease-in-out;
 }
 
 .nav-link:hover {
-    color: #ffc107; /* Warna aksen saat hover */
+    color: #ffc107; /* Warna tulisan saat disentuh mouse (kuning) */
+}
+
+/* Ini untuk memberi warna pada link yang sedang aktif */
+.navbar-nav .nav-link.active {
+    color: #ffc107 !important; /* Warna tulisan aktif (kuning) */
 }
 
 /* Button Customization */
@@ -304,3 +310,31 @@ section.show-animation {
             padding: 0.5em;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
+
+        /* Product Card Styling */
+.product-category-card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+.product-category-card .card-body {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+/* Map Container Styling */
+.map-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
